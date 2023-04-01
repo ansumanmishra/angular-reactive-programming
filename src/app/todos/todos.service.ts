@@ -1,16 +1,16 @@
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { BehaviorSubject, Observable, combineLatest, map, of } from "rxjs";
 import { Todo } from "../models/todos.model";
+import { HttpClient } from "@angular/common/http";
+
+const BASE_URL = 'http://localhost:3000/';
 
 @Injectable({
     providedIn: "root"
 })
 export class TodosService {
-    todos: Observable<Todo[]> = of([
-        { id: 1, title: 'Learn Angular', completed: true },
-        { id: 2, title: 'Learn React', completed: false },
-        { id: 3, title: 'Learn Vue', completed: false }
-    ]);
+    private http = inject(HttpClient);
+    todos: Observable<Todo[]> = this.http.get<Todo[]>(BASE_URL + 'todos');
 
     private delete$: BehaviorSubject<number> = new BehaviorSubject(0);
     private keyword$: BehaviorSubject<string> = new BehaviorSubject('');
