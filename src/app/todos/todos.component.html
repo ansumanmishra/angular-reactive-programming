@@ -1,0 +1,15 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>Todos</mat-card-title>
+        <mat-card-subtitle><input type="text" placeholder="Search" #keyword (keyup)="search(keyword.value)" /></mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-list role="list">
+            <ng-container *ngIf="(todos | async) as todos">
+                <mat-list-item role="listitem" *ngFor="let todo of todos">
+                    <button mat-button (click)="delete(todo.id)"><mat-icon>delete</mat-icon></button>
+                    {{todo.title}}</mat-list-item>
+            </ng-container>
+        </mat-list>
+    </mat-card-content>
+</mat-card>

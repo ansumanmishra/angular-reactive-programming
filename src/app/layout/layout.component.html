@@ -1,0 +1,17 @@
+<mat-toolbar color="primary">
+    <span><a routerLink="/" style="color: #ffffff; text-decoration: none;">Angular Reactive Programming</a></span>
+    <span class="example-spacer"></span>
+    <button mat-button class="example-icon favorite-icon" aria-label="Todos" routerLink="todos">
+        Todos
+    </button>
+
+    <span class="spacer"></span>
+    <button mat-icon-button>
+        <mat-icon>logout</mat-icon>
+    </button>
+    <ng-template #login>
+        <button mat-icon-button routerLink="/login">
+            <mat-icon>login</mat-icon>
+        </button>
+    </ng-template>
+</mat-toolbar>
