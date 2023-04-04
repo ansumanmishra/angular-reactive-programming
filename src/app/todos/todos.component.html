@@ -5,6 +5,8 @@
     </mat-card-header>
     <mat-card-content>
         <mat-list role="list">
+            <ng-container *ngIf="todosService.deleteTodo$ | async"></ng-container>
+            <ng-container *ngIf="todosService.todos$ | async"></ng-container>
             <ng-container *ngIf="(todos$ | async) as todos">
                 <mat-list-item role="listitem" *ngFor="let todo of todos">
                     <button mat-button (click)="delete(todo.id)"><mat-icon>delete</mat-icon></button>

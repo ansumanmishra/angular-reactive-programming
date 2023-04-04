@@ -20,6 +20,16 @@ app.get('/todos', (req, res) => {
   res.json(todos);
 });
 
+app.delete('/todos/:id', (req, res) => {
+  const id = req.params.id;
+  const index = todos.findIndex(todo => todo.id === +id);
+  if (index < 0) {
+    res.status(404).json({ message: 'Todo not found' });
+  }
+  todos.splice(index, 1);
+  res.json(id);
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })

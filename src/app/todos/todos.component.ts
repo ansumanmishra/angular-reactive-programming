@@ -5,18 +5,17 @@ import {MatListModule} from '@angular/material/list';
 import { TodosService } from './todos.service';
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
-import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-todos',
   standalone: true,
-  imports: [MatCardModule, MatButtonModule, MatListModule, AsyncPipe, NgIf, NgFor, MatIconModule, HttpClientModule],
+  imports: [MatCardModule, MatButtonModule, MatListModule, AsyncPipe, NgIf, NgFor, MatIconModule],
   templateUrl: './todos.component.html',
   styleUrls: ['./todos.component.css']
 })
 export class TodosComponent {
   readonly todosService = inject(TodosService);
-  todos$ = this.todosService.fileredTodos;
+  todos$ = this.todosService.mergedTodos$;
 
   delete(id: number) {
     this.todosService.delete(id);
