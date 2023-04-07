@@ -15,7 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
 })
 export class TodosComponent {
   readonly todosService = inject(TodosService);
-  todos$ = this.todosService.mergedTodos$;
+  todos$ = this.todosService.filteredTodos$;
 
   delete(id: number) {
     this.todosService.delete(id);

@@ -1,5 +1,5 @@
 import { Injectable, inject } from "@angular/core";
-import { BehaviorSubject, Observable, Subject, combineLatest, map, shareReplay, startWith, switchMap, tap } from "rxjs";
+import { BehaviorSubject, Observable, Subject, combineLatest, map, shareReplay, switchMap, tap } from "rxjs";
 import { Todo } from "../models/todos.model";
 import { HttpClient } from "@angular/common/http";
 
@@ -20,6 +20,7 @@ export class TodosService {
     );
 
     deleteTodo$: Observable<number> = this.delete$.pipe(
+        tap(id => console.log('delete id: ', id)),
         switchMap(id => this.http.delete<number>(BASE_URL + 'todos/' + id)),
         tap((id) => {
             const currentTodos = this.todosLists$.value.filter(todo => todo.id !== +id);            
@@ -27,7 +28,8 @@ export class TodosService {
         }),
     );
     
-    private filteredTodos: Observable<Todo[]> = combineLatest([this.todosLists$, this.keyword$]).pipe(
+    filteredTodos$: Observable<Todo[]> = combineLatest([this.todosLists$, this.keyword$]).pipe(
+        tap(([todos, keyword]) => console.log('todos: ', todos, 'keyword: ', keyword)),
         map(([todos, keyword]) => {            
             if (keyword) {
                 return todos.filter(todo => todo.title.includes(keyword));
@@ -35,8 +37,6 @@ export class TodosService {
             return todos;
         })
     );
-
-    mergedTodos$: Observable<Todo[]> = this.filteredTodos;
 
     delete(id: number) {
         this.delete$.next(id);

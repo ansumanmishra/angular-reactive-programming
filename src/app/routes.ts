@@ -1,6 +1,9 @@
 import { Route } from "@angular/router";
+import { TodosComponent } from "./todos/todos.component";
 
 export const routes: Route[] = [{
     path: 'todos',
-    loadComponent: () => import('./todos/todos.component').then(m => m.TodosComponent)
+    component: TodosComponent
+    // Lazy loading:
+    // loadComponent: () => import('./todos/todos.component').then(m => m.TodosComponent)
 }];
