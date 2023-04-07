@@ -1,9 +1,7 @@
-import { Injectable, inject } from "@angular/core";
+import { Inject, Injectable, inject } from "@angular/core";
 import { BehaviorSubject, Observable, Subject, combineLatest, map, shareReplay, switchMap, tap } from "rxjs";
 import { Todo } from "../models/todos.model";
 import { HttpClient } from "@angular/common/http";
-
-const BASE_URL = 'http://localhost:3000/';
 
 @Injectable({
     providedIn: "root"
@@ -14,14 +12,16 @@ export class TodosService {
     private keyword$: BehaviorSubject<string> = new BehaviorSubject('');
     private todosLists$: BehaviorSubject<Todo[]> = new BehaviorSubject<Todo[]>([]);
 
-    todos$: Observable<Todo[]> = this.http.get<Todo[]>(BASE_URL + 'todos').pipe(
+    constructor(@Inject('BASE_URL') private baseUrl: string) {
+    }
+
+    todos$: Observable<Todo[]> = this.http.get<Todo[]>(this.baseUrl + 'todos').pipe(
         tap(todos => this.todosLists$.next(todos)),
         shareReplay(1)
     );
 
     deleteTodo$: Observable<number> = this.delete$.pipe(
-        tap(id => console.log('delete id: ', id)),
-        switchMap(id => this.http.delete<number>(BASE_URL + 'todos/' + id)),
+        switchMap(id => this.http.delete<number>(this.baseUrl + 'todos/' + id)),
         tap((id) => {
             const currentTodos = this.todosLists$.value.filter(todo => todo.id !== +id);            
             this.todosLists$.next(currentTodos);

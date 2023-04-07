@@ -16,6 +16,10 @@ app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
+app.get('/login', (req, res) => {
+  res.send(true)
+});
+
 app.get('/todos', (req, res) => {
   res.json(todos);
 });

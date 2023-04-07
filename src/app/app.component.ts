@@ -10,5 +10,8 @@ import { LayoutComponent } from './layout/layout.component';
   imports: [RouterModule, LayoutComponent]
 })
 export class AppComponent {
+  constructor() {
+    console.log('AppComponent');
+  }
   title = 'angular-reactive-programming';
 }
