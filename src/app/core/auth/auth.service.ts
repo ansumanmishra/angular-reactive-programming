@@ -6,7 +6,7 @@ import { catchError, of, tap } from "rxjs";
     providedIn: 'root'
 })
 export class AuthService {
-    isAuthenticated = false;
+    isAuthenticated = true;
 
     constructor(@Inject('BASE_URL') private readonly baseUrl: string, private readonly http: HttpClient) {
         console.log('AuthService');
